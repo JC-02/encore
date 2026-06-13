@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "Encore",
+    "slug": "encore",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "encore",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0E0E13",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.encore.game"
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-audio",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0E0E13",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 120
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

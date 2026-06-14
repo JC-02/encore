@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel superseded runs on the same ref to save minutes.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: ${{ matrix.check.name }}
+    runs-on: ubuntu-latest
+    # Each check is independent, so report them all and don't stop at the first failure.
+    strategy:
+      fail-fast: false
+      matrix:
+        check:
+          - { name: lint, cmd: npm run lint }
+          - { name: typecheck, cmd: npm run typecheck }
+          - { name: build, cmd: npm run build:web }
+          - { name: expo-doctor, cmd: npx expo-doctor }
+          # A `test` check will be added here once the test suite lands (Vitest +
+          # convex-test + Playwright). See CLAUDE.md / the testing plan.
+    env:
+      # Public-by-design placeholder so the web export builds without secrets;
+      # the real value is injected by Vercel at deploy time.
+      EXPO_PUBLIC_CONVEX_URL: https://placeholder.convex.cloud
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: ${{ matrix.check.cmd }}

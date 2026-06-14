@@ -123,12 +123,36 @@ lint:fix` to auto-fix). Lint should be **clean before any commit**. Run it at th
 end of each changeset too, not only at the final push, so hook and style issues
 surface while the context is fresh.
 
+## Testing
+
+Stack:
+
+- **Vitest** runs unit and backend tests (`*.test.ts`). `npm test` runs once,
+  `npm run test:watch` is the TDD loop, `npm run test:coverage` adds coverage.
+- **convex-test** tests Convex functions against an in-memory backend (no
+  deployment). Convex test files start with `// @vitest-environment edge-runtime`.
+- **Playwright** runs web E2E in `e2e/` (`npm run test:e2e`).
+
+Rules we enforce:
+
+- **TDD.** For a new behavior or a bug fix, write the failing test first, then
+  make it pass.
+- **Functional or logical changes carry tests.** Run every affected test, update
+  them as needed, and confirm they pass. Confirm coverage (line, branch, and
+  function) for the affected areas stays the same or improves. Pure docs or
+  config changes may not need tests.
+- **Test behaviors and public surface**, and our own logic: scoring, decoy and
+  year-wheel math, validation, the round lifecycle, and the R6 secret gating. Do
+  not test trivial getters or framework internals.
+- **Never skip or weaken a test to make it pass.** Fix the code or ask.
+
 ## Continuous integration
 
 GitHub Actions runs on every PR and push to `main` (`.github/`):
 
-- **CI** (`workflows/ci.yml`): parallel matrix of `lint`, `typecheck`,
-  `build:web`, and `expo-doctor`. (A `test` job joins once the suite lands.)
+- **CI** (`workflows/ci.yml`): parallel matrix of `lint`, `typecheck`, `test`
+  (Vitest), and `build:web`, plus `expo-doctor`. A separate `e2e` job runs the
+  Playwright suite.
 - **CodeQL** (`workflows/codeql.yml`): JS/TS security and quality scanning on
   PRs and weekly.
 - **Dependabot** (`dependabot.yml`): weekly npm and GitHub-Actions update PRs.
@@ -177,10 +201,9 @@ examples. PATCH bumps don't need the User-Agent touched.
 
 ## Quick checks (run the smallest relevant first)
 
-- TS/TSX edit → `npm run lint` + `npm run typecheck`.
-- UI/behavior change → also run the app (`npm run web`) and, when behavior
-  changed, drive it (the Playwright E2E pattern in earlier sessions).
-- Backend change → `npm run convex:dev` (pushes + typechecks the functions).
+- TS/TSX edit → `npm run lint` + `npm run typecheck` + `npm test`.
+- Backend change → the convex-test suite (`npm test`) and `npm run convex:dev`.
+- UI/behavior change → run the app (`npm run web`) and `npm run test:e2e`.
 - Anything that could affect the bundle → `npm run build:web`.
 
 ## Checklist when staging a commit (end of session / before a push)
@@ -189,6 +212,7 @@ Run this against the **staged changeset**, not after every edit:
 
 - [ ] `npm run lint` is clean (also run it at the end of each changeset).
 - [ ] `npm run typecheck` is clean.
+- [ ] `npm test` passes, and new behavior or a bug fix has a test.
 - [ ] `npm run build:web` succeeds (the Vercel deploy path).
 - [ ] No new raw colors / ad-hoc styles (grep above).
 - [ ] New repeated logic/markup extracted to `lib/` or a primitive.

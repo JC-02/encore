@@ -30,6 +30,7 @@ race to guess its **title**, **artist**, and **release year** for points across
 - [Deployment](#deployment)
 - [Security & secrets](#security--secrets)
 - [iOS](#ios)
+- [Testing](#testing)
 - [Available scripts](#available-scripts)
 - [Troubleshooting](#troubleshooting)
 - [Scope & known limitations](#scope--known-limitations)
@@ -376,6 +377,25 @@ scope for v0**.
 
 ---
 
+## Testing
+
+The test stack:
+
+- **Vitest** for unit and backend tests (`*.test.ts`), with **convex-test** for
+  Convex functions (in-memory, no deployment needed).
+- **Playwright** for web E2E in `e2e/`.
+
+```bash
+npm test            # run the Vitest suite once
+npm run test:watch  # watch mode (the TDD loop)
+npm run test:coverage  # Vitest with line/branch/function coverage
+npm run test:e2e    # Playwright web E2E (boots the Expo web server)
+```
+
+The first E2E run downloads a browser with `npx playwright install chromium`.
+CI runs the Vitest suite in the main matrix and the Playwright suite in a
+separate job. New behavior or a bug fix should come with a test (TDD).
+
 ## Available scripts
 
 | Script | What it does |
@@ -386,6 +406,9 @@ scope for v0**.
 | `npm run convex:dev` | Run/watch the Convex backend (also creates `.env.local`). |
 | `npm run lint` / `npm run lint:fix` | Run ESLint (auto-fix variant). |
 | `npm run typecheck` | Run `tsc --noEmit` across the whole project. |
+| `npm test` / `npm run test:watch` | Run the Vitest suite (once / watch mode). |
+| `npm run test:coverage` | Vitest with line, branch, and function coverage. |
+| `npm run test:e2e` | Run the Playwright web E2E suite. |
 | `npm run build:web` | Produce the production web export into `dist/`. |
 | `npm run prebake` | Dry-run the default-playlist bake (stats + year spot-check, writes nothing). |
 | `npm run prebake:commit` | Bake the default playlists into Convex. Append `-- --prod` for production. |

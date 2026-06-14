@@ -46,6 +46,12 @@ encore_v*_spec.md
 # Convex local artifacts (convex/_generated/ IS committed — needed for typecheck/build)
 .convex/
 
+# test output
+coverage/
+playwright-report/
+test-results/
+.playwright/
+
 # typescript
 *.tsbuildinfo
 

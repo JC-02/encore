@@ -13,6 +13,10 @@
     "prebake:commit": "node scripts/prebake.mjs --commit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
     "clean": "rm -rf dist .expo node_modules/.cache"
   },
   "dependencies": {
@@ -43,11 +47,16 @@
     "react-native-worklets": "0.8.3"
   },
   "devDependencies": {
+    "@edge-runtime/vm": "^5.0.0",
+    "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.3",
     "@types/react": "~19.2.2",
+    "@vitest/coverage-v8": "^4.1.8",
+    "convex-test": "^0.0.53",
     "eslint": "^9.39.4",
     "eslint-config-expo": "~56.0.4",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "vitest": "^4.1.8"
   },
   "private": true
 }

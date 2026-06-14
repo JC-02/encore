@@ -53,7 +53,7 @@ export default function HostSetup() {
       });
       router.replace(`/lobby/${code}`);
     } catch (e) {
-      setError(errMessage(e, "Couldn't create the lobby — try again"));
+      setError(errMessage(e, "Couldn't create the lobby, try again"));
       setCreating(false);
     }
   };
@@ -74,7 +74,7 @@ export default function HostSetup() {
           {playlists?.length === 0 && (
             <Card>
               <Body tone="sub" align="center">
-                No playlists yet — the default playlists haven’t been baked into
+                No playlists yet. The default playlists haven’t been baked into
                 this deployment.
               </Body>
             </Card>

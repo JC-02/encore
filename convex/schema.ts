@@ -86,8 +86,8 @@ export default defineSchema({
     .index("by_lobby", ["lobbyId"])
     .index("by_lobby_round", ["lobbyId", "roundNumber"]),
 
-  // SECRET — read only by server mutations; never returned by client-facing
-  // queries while the round is "playing" (rule R6).
+  // SECRET: read only by server mutations. Never returned by a client-facing
+  // query while the round is "playing" (rule R6).
   roundSecrets: defineTable({
     roundId: v.id("rounds"),
     correctTitleIndex: v.number(),

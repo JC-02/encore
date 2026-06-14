@@ -66,8 +66,8 @@ export default function Game() {
   const [yearGuess, setYearGuess] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // Reset answers when the round changes — the React-blessed "adjust state on
-  // prop change during render" pattern (no effect, no extra paint).
+  // Reset answers when the round changes. This is React's documented "adjust
+  // state on prop change during render" pattern (no effect, no extra paint).
   const roundId = round?.roundId ?? null;
   const [answeredRound, setAnsweredRound] = useState(roundId);
   if (roundId !== answeredRound) {
@@ -203,7 +203,7 @@ export default function Game() {
         },
       });
     } catch (e) {
-      setError(errMessage(e, "Couldn't submit — try again"));
+      setError(errMessage(e, "Couldn't submit, try again"));
       setSubmitting(false);
     }
   };
@@ -215,7 +215,7 @@ export default function Game() {
         {error && <Banner text={error} variant="danger" />}
         {audio.audioFailed && playing && (
           <Pressable onPress={audio.retry}>
-            <Banner text="Audio unavailable — tap to retry, or answer anyway!" variant="info" />
+            <Banner text="Audio unavailable. Tap to retry, or answer anyway." variant="info" />
           </Pressable>
         )}
 
@@ -245,7 +245,7 @@ export default function Game() {
           caption={revealed ? "It was" : "Now playing"}
           title={
             revealed
-              ? `${round.reveal!.title} — ${round.reveal!.artist} (${round.reveal!.year})`
+              ? `${round.reveal!.title} · ${round.reveal!.artist} (${round.reveal!.year})`
               : "Mystery track"
           }
           playing={!!playing && !preRoll && audio.isPlaying}
@@ -314,7 +314,7 @@ export default function Game() {
           <View style={{ gap: sp(2) }}>
             {revealed && (
               <Label uppercase>
-                Year — you said {round.yourSubmission?.yearGuess ?? "nothing"}
+                Year (you said {round.yourSubmission?.yearGuess ?? "nothing"})
               </Label>
             )}
             <YearWheel
@@ -343,7 +343,7 @@ export default function Game() {
         {playing && submitted && (
           <Card>
             <Body align="center" tone="sub">
-              Locked in — waiting for others ({round.submittedCount}/{round.connectedCount})
+              Locked in, waiting for others ({round.submittedCount}/{round.connectedCount})
             </Body>
           </Card>
         )}

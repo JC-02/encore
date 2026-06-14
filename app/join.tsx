@@ -19,7 +19,7 @@ import { useTheme } from "../theme";
 
 /** Friendly copy for the join failure modes (spec §13.3). */
 function joinErrorMessage(raw: string): string {
-  if (raw.includes("not found")) return "No lobby with that code — double-check it";
+  if (raw.includes("not found")) return "No lobby with that code, double-check it";
   if (raw.includes("full")) return "That lobby is full (12 players max)";
   if (raw.includes("started")) return "That game has already started";
   return raw;

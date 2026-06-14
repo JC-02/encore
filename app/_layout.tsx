@@ -48,7 +48,7 @@ export default function RootLayout() {
         <ThemeProvider value={darkTheme}>
           <Screen center>
             <Body align="center" tone="danger">
-              Missing EXPO_PUBLIC_CONVEX_URL — run `npx convex dev` and restart.
+              Missing EXPO_PUBLIC_CONVEX_URL. Run `npx convex dev` and restart.
             </Body>
           </Screen>
         </ThemeProvider>

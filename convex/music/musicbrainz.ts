@@ -3,7 +3,7 @@
 // on a 2010 compilation reads 1985.
 //
 // A song maps to MANY MusicBrainz recordings (originals, remasters, live
-// takes), all titled identically — and MB search returns slightly different
+// takes), all titled identically, and MB search returns slightly different
 // result windows per request. Empirically validated combination of signals:
 //   - canonical: the exact-match recording with the most attached releases
 //   - cluster: the earliest year that >=2 independent recordings agree on
@@ -64,7 +64,7 @@ async function searchCandidates(
   }
   const body = (await res.json()) as { recordings?: MbRecording[] };
 
-  // Accept either the full title or the search-cleaned one — covers both
+  // Accept either the full title or the search-cleaned one. Covers both
   // "(I Can't Help) Falling…" (real parenthetical) and "… (Remaster)" noise.
   const wantTitles = new Set([norm(title), norm(cleanTitleForSearch(title))]);
   const wantArtist = norm(artist);

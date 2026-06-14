@@ -1,4 +1,4 @@
-// Game constants — the single config module (spec §7).
+// Game constants. The single config module (spec §7).
 // Imported by both the Expo client and the Convex backend.
 
 export const COUNTDOWN_LOBBY_MS = 15_000;

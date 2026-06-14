@@ -1,9 +1,9 @@
 // Track-title cleanup shared by the prebake pipeline and the MusicBrainz
 // resolver. Two different jobs:
-//   - cleanDisplayTitle: what players SEE — strip release noise like
+//   - cleanDisplayTitle: what players SEE. Strip release noise like
 //     "(Remastered 2009)" (ugly, and "2015 Remaster" leaks era hints) while
 //     preserving real parentheticals ("(I Can't Help) Falling in Love…").
-//   - cleanTitleForSearch: what we SEND to MusicBrainz — strip everything
+//   - cleanTitleForSearch: what we SEND to MusicBrainz. Strip everything
 //     bracketed plus feat. credits, maximizing match odds.
 
 const NOISE =

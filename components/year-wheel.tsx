@@ -22,7 +22,7 @@ interface YearWheelProps {
 }
 
 /**
- * Horizontal wheel snapping to whole years (spec §8.2) — one of the two
+ * Horizontal wheel snapping to whole years (spec §8.2). One of the two
  * signature interactions. surfaceUp band, faint ticks, accent center pill.
  */
 export function YearWheel({ min, max, value, onChange, disabled, correctYear }: YearWheelProps) {
@@ -35,8 +35,8 @@ export function YearWheel({ min, max, value, onChange, disabled, correctYear }: 
   const sidePad = Math.max(0, width / 2 - TICK_WIDTH / 2);
   const indexOf = (year: number) => Math.min(years.length - 1, Math.max(0, year - min));
 
-  // Align once the container width (and thus side padding) is measured —
-  // the initial contentOffset renders before padding exists.
+  // Align once the container width (and thus side padding) is measured.
+  // The initial contentOffset renders before padding exists.
   useEffect(() => {
     if (width > 0) {
       const target = correctYear ?? value;

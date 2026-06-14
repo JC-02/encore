@@ -1,14 +1,14 @@
 // Scheduled cleanup of stale lobbies and their child docs.
 //
 // Lobbies are created freely by unauthenticated clients (anonymous party game),
-// so without cleanup the tables grow without bound — the main resource-
+// so without cleanup the tables grow without bound. That is the main resource-
 // exhaustion vector. A real game lasts ~10 minutes, so anything older than the
 // cutoff is abandoned and safe to delete regardless of status.
 
 import { internalMutation, MutationCtx } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
 
-const STALE_AFTER_MS = 24 * 60 * 60 * 1000; // 24h — far beyond any real game
+const STALE_AFTER_MS = 24 * 60 * 60 * 1000; // 24h, far beyond any real game
 const MAX_DELETIONS_PER_RUN = 100; // bound the work per cron tick
 
 async function deleteLobbyCascade(ctx: MutationCtx, lobbyId: Id<"lobbies">) {

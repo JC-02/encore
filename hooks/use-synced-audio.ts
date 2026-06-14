@@ -11,8 +11,8 @@ interface SyncedAudioArgs {
   active: boolean;
 }
 
-// If the clip still hasn't loaded this long after playAt, declare failure —
-// the round must never block on audio (spec §7 step 6).
+// If the clip still hasn't loaded this long after playAt, declare failure.
+// The round must never block on audio (spec §7 step 6).
 const AUDIO_FAIL_GRACE_MS = 4000;
 
 /**

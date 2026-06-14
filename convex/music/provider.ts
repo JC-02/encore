@@ -1,4 +1,4 @@
-// MusicProvider — the deliberate v1 swap seam (spec §3).
+// MusicProvider: the deliberate v1 swap seam (spec §3).
 // v0 ships exactly one implementation (Deezer). Game code never talks to a
 // provider at runtime; providers are used only at pre-bake time.
 

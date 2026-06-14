@@ -1,5 +1,5 @@
 // Round building: decoy selection + year-wheel placement (spec §8).
-// Pure functions — no Convex context — so the logic is testable and DRY.
+// Pure functions with no Convex context, so the logic is testable and DRY.
 
 import {
   CHOICE_COUNT,
@@ -102,7 +102,7 @@ export interface WheelWindow {
 
 /**
  * Place the 25-year wheel window so the true year sits at a random index
- * between 3 and 22 — band fully on the wheel, answer never at an edge (R5).
+ * between 3 and 22, so the band fits and the answer is never at an edge (R5).
  */
 export function buildWheel(trueYear: number): WheelWindow {
   const wheelMin = trueYear - randInt(WHEEL_ANSWER_MIN_INDEX, WHEEL_ANSWER_MAX_INDEX);

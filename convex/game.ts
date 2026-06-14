@@ -228,7 +228,7 @@ export const submitAnswer = mutation({
 
 /**
  * The current round as a client may see it (rule R6):
- * - while "playing": choices, wheel, timing, your own picks — never correctness
+ * - while "playing": choices, wheel, timing, your own picks, never correctness
  * - once "revealed": reveal fields, your scored submission, scoreboard
  */
 export const roundView = query({

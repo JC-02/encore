@@ -99,7 +99,7 @@ export const prebake = action({
       if (commit) {
         if (lookupErrors > 0) {
           throw new Error(
-            `"${source.name}": ${lookupErrors} year lookups failed — re-run (cache resumes) before committing`,
+            `"${source.name}": ${lookupErrors} year lookups failed. Re-run (cache resumes) before committing.`,
           );
         }
         if (!stats.valid) {

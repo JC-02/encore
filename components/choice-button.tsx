@@ -13,7 +13,7 @@ interface ChoiceButtonProps {
 }
 
 /**
- * Answer tile (spec §11): single-accent selection — surface fill + empty radio
+ * Answer tile (spec §11). Single-accent selection: surface fill + empty radio
  * by default, accent fill + check when selected, success/danger at reveal.
  */
 export function ChoiceButton({ label, state, onPress, disabled, testID }: ChoiceButtonProps) {

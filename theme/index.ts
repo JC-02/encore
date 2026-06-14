@@ -1,4 +1,4 @@
-// "Spotlight" design tokens (spec §11) — the ONLY place raw design values live.
+// "Spotlight" design tokens (spec §11). The ONLY place raw design values live.
 // Tokens are semantic so a light palette can be added later as a sibling
 // object swapped through ThemeProvider; components never touch raw hex.
 
@@ -12,9 +12,9 @@ export const darkColors = {
   ink: "#FFFFFF", // primary text
   sub: "#9A9AAC", // secondary text
   faint: "#5A5A68", // hints, inactive ticks
-  accent: "#7C6CFF", // PRIMARY — buttons, selection, highlights
-  accentPink: "#EC4899", // secondary accent — win/podium flourishes (sparing)
-  accentCyan: "#22D3EE", // tertiary — year-wheel label, info
+  accent: "#7C6CFF", // PRIMARY: buttons, selection, highlights
+  accentPink: "#EC4899", // secondary accent: win/podium flourishes (sparing)
+  accentCyan: "#22D3EE", // tertiary: year-wheel label, info
   onAccent: "#FFFFFF", // text/icon on accent fills
   success: "#3DD6C4", // correct answer at reveal
   danger: "#FF5D6C", // wrong answer at reveal

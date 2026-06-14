@@ -21,13 +21,12 @@ jobs:
         check:
           - { name: lint, cmd: npm run lint }
           - { name: typecheck, cmd: npm run typecheck }
+          - { name: test, cmd: npm test }
           - { name: build, cmd: npm run build:web }
           - { name: expo-doctor, cmd: npx expo-doctor }
-          # A `test` check will be added here once the test suite lands (Vitest +
-          # convex-test + Playwright). See CLAUDE.md / the testing plan.
     env:
-      # Public-by-design placeholder so the web export builds without secrets;
-      # the real value is injected by Vercel at deploy time.
+      # Public-by-design placeholder so the web export builds without secrets.
+      # The real value is injected by Vercel at deploy time.
       EXPO_PUBLIC_CONVEX_URL: https://placeholder.convex.cloud
     steps:
       - uses: actions/checkout@v4
@@ -37,3 +36,18 @@ jobs:
           cache: npm
       - run: npm ci
       - run: ${{ matrix.check.cmd }}
+
+  e2e:
+    name: e2e
+    runs-on: ubuntu-latest
+    env:
+      EXPO_PUBLIC_CONVEX_URL: https://placeholder.convex.cloud
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e

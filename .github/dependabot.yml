@@ -1,6 +1,8 @@
 version: 2
 updates:
-  # npm dependencies, grouped so minor/patch bumps come as one PR.
+  # npm dependencies. Expo-managed packages move with the SDK and are upgraded
+  # via `npx expo install`, so Dependabot ignores them. It also ignores all major
+  # bumps here, which need a manual review (e.g. ESLint 10 breaks eslint-config-expo).
   - package-ecosystem: npm
     directory: "/"
     schedule:
@@ -9,8 +11,19 @@ updates:
     groups:
       minor-and-patch:
         update-types: [minor, patch]
+    ignore:
+      - dependency-name: "expo"
+      - dependency-name: "expo-*"
+      - dependency-name: "react"
+      - dependency-name: "react-dom"
+      - dependency-name: "react-native"
+      - dependency-name: "react-native-*"
+      - dependency-name: "@expo-google-fonts/*"
+      - dependency-name: "@react-native-async-storage/async-storage"
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
-  # Keep the GitHub Actions in our workflows up to date.
+  # GitHub Actions versions.
   - package-ecosystem: github-actions
     directory: "/"
     schedule:

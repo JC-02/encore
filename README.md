@@ -6,7 +6,7 @@
 
 A multiplayer music-guessing party game. Players hear a ~30-second song clip and
 race to guess its **title**, **artist**, and **release year** for points across
-10 rounds — Kahoot's pace and accessibility in a sleek, modern music-app shell.
+10 rounds, with Kahoot's pace and accessibility in a music-app shell.
 
 `v0.1.0` · TypeScript end-to-end · runs at **$0** on free tiers
 
@@ -40,15 +40,15 @@ race to guess its **title**, **artist**, and **release year** for points across
 ## Introduction
 
 Encore is a real-time, **server-authoritative** party game for **1–12 players**.
-A host creates a private "Friends" lobby and shares a short join code; guests
-join with just a display name and a preset avatar (no accounts). The host picks
-one of three curated playlists and starts a **Classic** 10-round game.
+A host creates a private "Friends" lobby and shares a short join code. Guests
+join with a display name and a preset avatar (no accounts). The host picks one
+of three curated playlists and starts a **Classic** 10-round game.
 
 Each round, a ~30-second clip plays **in sync on every device**. Players answer:
 
-- **Title** — 5-option multiple choice
-- **Artist** — 5-option multiple choice
-- **Year** — an interactive scrolling wheel
+- **Title**: 5-option multiple choice
+- **Artist**: 5-option multiple choice
+- **Year**: an interactive scrolling wheel
 
 Scoring is computed **only on the server** (clients never see the correct
 answers before the reveal): Title **+1**, Artist **+2**, Year **+3** exact or
@@ -66,7 +66,7 @@ system.
 > 🚧 **Not yet deployed.** Once the production deployment is connected
 > (see [Deployment](#deployment)), the public URL will go here:
 >
-> **▶︎ `https://<your-app>.vercel.app`** *(placeholder — replace after deploy)*
+> **▶︎ `https://<your-app>.vercel.app`** *(placeholder, replace after deploy)*
 
 Until then, follow [Running locally](#running-locally) to play on your machine.
 
@@ -74,24 +74,24 @@ Until then, follow [Running locally](#running-locally) to play on your machine.
 
 ## Technology overview
 
-Every choice optimizes for easy setup, ~$0 cost at friends-scale, decent MVP
+Every choice optimizes for easy setup, ~$0 cost at friends-scale, good MVP
 performance, and **one language (TypeScript) end-to-end**.
 
 | Layer | Technology | Role |
 |---|---|---|
 | **Client (Web + iOS)** | [Expo](https://expo.dev) (React Native + React Native Web) | One codebase compiles to web **and** iOS. File-based routing via Expo Router. |
 | **Audio** | [`expo-audio`](https://docs.expo.dev/versions/latest/sdk/audio/) | Plays a Deezer preview (a plain 30s MP3 URL) on web + iOS. |
-| **Backend** | [Convex](https://convex.dev) | The keystone: a single managed backend bundling a **reactive database**, **server-side functions**, **realtime subscriptions**, and **scheduling/cron**. Gives us server-authoritative game logic + realtime sync with no WebSocket server to run. |
+| **Backend** | [Convex](https://convex.dev) | A single managed backend bundling a **reactive database**, **server-side functions**, **realtime subscriptions**, and **scheduling/cron**. Gives us server-authoritative game logic + realtime sync with no WebSocket server to run. |
 | **Music data** | [Deezer API](https://developers.deezer.com/api) + [MusicBrainz](https://musicbrainz.org/doc/MusicBrainz_API) | Deezer supplies free 30s preview MP3s + metadata (no per-user login). MusicBrainz supplies the **original** release year. Both called server-side from Convex actions at pre-bake time. |
 | **Web hosting** | [Vercel](https://vercel.com) | Hosts the Expo web export; push-to-deploy from GitHub. Convex connects via the Vercel marketplace integration. |
 | **iOS build (deferred)** | [Expo EAS](https://docs.expo.dev/eas/) | `eas build` produces an iOS binary when desired. App Store submission is out of scope for v0. |
 
 **Why these and not the obvious alternatives** (so they don't get swapped):
-Spotify prohibits games and requires Premium per player; a self-hosted
-WebSocket server (Colyseus/Socket.IO) can't run on Vercel and adds an always-on
-server to operate; Supabase/Firebase would still need a separate place to run
-authoritative per-room logic and timers. Convex collapses DB + logic + realtime
-+ scheduling into one. See spec §2.1 for the full rationale.
+Spotify prohibits games and requires Premium per player. A self-hosted WebSocket
+server (Colyseus/Socket.IO) can't run on Vercel and adds an always-on server to
+operate. Supabase/Firebase would still need a separate place to run authoritative
+per-room logic and timers. Convex collapses DB + logic + realtime + scheduling
+into one. See spec §2.1 for the full rationale.
 
 ---
 
@@ -135,7 +135,7 @@ encore/
 │  ├─ join.tsx               #   Join setup
 │  ├─ lobby/[code].tsx       #   Lobby (host + player views)
 │  └─ game/[code].tsx        #   Round play / reveal / podium
-├─ components/               # Styled PRIMITIVES — ALL UI composes these (spec §11)
+├─ components/               # Styled PRIMITIVES. ALL UI composes these (spec §11)
 ├─ theme/                    # Design tokens: colors, type, spacing, radius, motion
 ├─ hooks/                    # useGameClock, useSyncedAudio, useHeartbeat, …
 ├─ lib/                      # Shared constants + validation (client AND backend)
@@ -157,12 +157,12 @@ encore/
 **DRY backbone:** Convex generates end-to-end types from `schema.ts`, so the
 client and server share one type source. Game rules, scoring, and timing
 constants live once in [`lib/constants.ts`](./lib/constants.ts); name validation
-lives once in [`lib/validation.ts`](./lib/validation.ts) — both imported by the
-client *and* the backend.
+lives once in [`lib/validation.ts`](./lib/validation.ts). Both are imported by the
+client and the backend.
 
 **Visual system:** there is **no per-component ad-hoc styling**. All raw design
 values live once in [`theme/`](./theme/index.ts) as semantic tokens (`bg`,
-`surface`, `accent`, …), and every screen composes the ~19 primitives in
+`surface`, `accent`, …), and every screen composes the primitives in
 [`components/`](./components) via variant props.
 
 ---
@@ -174,7 +174,7 @@ values live once in [`theme/`](./theme/index.ts) as semantic tokens (`bg`,
 | **Node.js** | **≥ 20** (tested on 22.x) | Includes `npm` and `npx`. |
 | **npm** | ≥ 10 | Ships with Node. |
 | **Git** | any recent | For cloning + deploys. |
-| A modern web browser | — | Chrome/Edge/Safari/Firefox. |
+| A modern web browser | any | Chrome/Edge/Safari/Firefox. |
 
 For a **production deployment** you will also need (free) accounts:
 [Convex](https://convex.dev), [Vercel](https://vercel.com), and a GitHub repo.
@@ -209,32 +209,31 @@ npx convex dev
 
 The first time you run this, the CLI will prompt you:
 
-- **Log in / create a project** (opens a browser) — recommended for a persistent
+- **Log in / create a project** (opens a browser): recommended for a persistent
   cloud dev deployment, **or**
 - choose the **local/anonymous** option to develop entirely on your machine with
   no account.
 
-Either way, leave this command **running** — it watches `convex/`, pushes
-function changes live, and keeps `.env.local` populated with
-`EXPO_PUBLIC_CONVEX_URL`.
+Either way, leave this command **running**. It watches `convex/`, pushes function
+changes live, and keeps `.env.local` populated with `EXPO_PUBLIC_CONVEX_URL`.
 
 > **Heads-up:** a brand-new deployment has **no playlists yet**, so the Host
 > screen will show "No playlists yet." Bake the default content once (next-but-one
-> section) — or just run the app first to see the lobby flow.
+> section), or run the app first to see the lobby flow.
 
 ---
 
 ## Running locally
 
-You need **two terminals** — one for the backend, one for the web client.
+You need **two terminals**, one for the backend and one for the web client.
 
-**Terminal 1 — backend** (keep it running):
+**Terminal 1 (backend)**, keep it running:
 
 ```bash
 npx convex dev
 ```
 
-**Terminal 2 — web client:**
+**Terminal 2 (web client):**
 
 ```bash
 npm run web
@@ -254,21 +253,21 @@ session): host in one, join with the code from the others.
 ## Content creation: baking the playlists
 
 Game content is **pre-baked** into Convex (not fetched live mid-game), so each
-round is just a fast DB read. The pre-bake action pulls tracks from Deezer,
+round is a fast DB read. The pre-bake action pulls tracks from Deezer,
 resolves each track's **original** release year from MusicBrainz, cleans up
 display titles, validates variety, and writes the playlist to Convex.
 
 Run this **once per deployment** (the backend, `npx convex dev`, must be
-running). The three curated v0 default playlists — **All-Time Hits**,
-**Throwback Party**, **Rock Essentials** — are pre-filled in
+running). The three curated v0 default playlists (**All-Time Hits**, **Throwback
+Party**, **Rock Essentials**) are pre-filled in
 [`scripts/prebake.mjs`](./scripts/prebake.mjs), so the convenience scripts do the
 work:
 
 ```bash
-# 1. Identify yourself to MusicBrainz (etiquette; required by their API)
+# 1. Identify yourself to MusicBrainz (etiquette, required by their API)
 npx convex env set MUSICBRAINZ_USER_AGENT "Encore/0.1 (you@example.com)"
 
-# 2. Dry run — prints variety stats + a year spot-check sample, writes NOTHING
+# 2. Dry run: prints variety stats + a year spot-check sample, writes NOTHING
 npm run prebake
 
 # 3. Looks good? Commit the playlists to Convex
@@ -291,10 +290,10 @@ npx convex run prebake:prebake '{
 Flip `"commit"` to `true` to write. Add `--prod` to target production.
 </details>
 
-`prebake:commit` enforces the §9 validity rules — ≥40 tracks, ≥15 artists,
-≥8 distinct years, ≥25-year span, no artist >20%, no year >25% — and refuses to
+`prebake:commit` enforces the §9 validity rules (≥40 tracks, ≥15 artists,
+≥8 distinct years, ≥25-year span, no artist >20%, no year >25%) and refuses to
 write a playlist that fails them. The MusicBrainz year lookups are rate-limited
-to ~1/sec, so a fresh bake of all three takes several minutes; results are
+to ~1/sec, so a fresh bake of all three takes several minutes. Results are
 cached, so re-running is fast.
 
 ---
@@ -340,8 +339,9 @@ Encore deploys as a static web export on Vercel, with Convex as the backend.
    ```
 6. Replace the placeholder in [Live app](#live-app) with your Vercel URL.
 
-**Recommended GitHub hardening:** enable secret scanning + push protection,
-branch protection on `main`, and Dependabot.
+**GitHub hardening:** CI, CodeQL, and Dependabot are already configured in
+[`.github/`](./.github). Also enable secret scanning + push protection and branch
+protection on `main` in the repo settings.
 
 ---
 
@@ -351,13 +351,13 @@ branch protection on `main`, and Dependabot.
   client-side. Correct answers live only in the server-only `roundSecrets` table
   and are **never** returned to a client before the reveal.
 - **Secrets live only in Convex environment variables** (`npx convex env set`).
-  v0 has very few — Deezer needs no key, MusicBrainz needs only a User-Agent
-  string, and the Convex deploy key is managed by the CLI / Vercel env.
+  v0 has few. Deezer needs no key, MusicBrainz needs only a User-Agent
+  string, and the Convex deploy key is managed by the CLI or Vercel env.
 - **`EXPO_PUBLIC_CONVEX_URL` is public by design** and safe to ship in the built
-  client — it's just the deployment address.
+  client. It is the deployment address.
 - **Never commit `.env` files.** `.gitignore` excludes `.env` and `.env.*` except
   [`.env.example`](./.env.example), which lists variable **names only**.
-- Every mutation is authorized server-side; host-only actions verify
+- Every mutation is authorized server-side. Host-only actions verify
   `sessionId === hostSessionId`.
 
 ---
@@ -371,7 +371,7 @@ npm run ios   # requires Xcode / a simulator, or the Expo Go app on a device
 ```
 
 Producing a distributable build uses Expo EAS (`eas build`), and App Store
-submission requires an Apple Developer account — both deliberately **out of
+submission requires an Apple Developer account. Both are deliberately **out of
 scope for v0**.
 
 ---
@@ -383,7 +383,8 @@ scope for v0**.
 | `npm run web` | Start the Expo dev server for web (http://localhost:8081). |
 | `npm run ios` | Start the Expo dev server targeting iOS. |
 | `npm start` | Start the Expo dev server (choose platform interactively). |
-| `npm run convex` | Run/watch the Convex backend (alias for `convex dev`; also creates `.env.local`). |
+| `npm run convex:dev` | Run/watch the Convex backend (also creates `.env.local`). |
+| `npm run lint` / `npm run lint:fix` | Run ESLint (auto-fix variant). |
 | `npm run typecheck` | Run `tsc --noEmit` across the whole project. |
 | `npm run build:web` | Produce the production web export into `dist/`. |
 | `npm run prebake` | Dry-run the default-playlist bake (stats + year spot-check, writes nothing). |
@@ -394,15 +395,15 @@ scope for v0**.
 
 ## Troubleshooting
 
-- **Host screen says "No playlists yet."** The deployment hasn't been baked —
-  run the [content creation](#content-creation-baking-the-playlists) step.
+- **Host screen says "No playlists yet."** The deployment hasn't been baked. Run
+  the [content creation](#content-creation-baking-the-playlists) step.
 - **"Missing EXPO_PUBLIC_CONVEX_URL" on launch.** `npx convex dev` isn't running,
   or hasn't written `.env.local` yet. Start it, then restart `npm run web`.
 - **Audio doesn't play.** Browsers block autoplay until you interact with the
-  page; the round shows an "audio unavailable — tap to retry" banner and never
+  page. The round shows an "audio unavailable, tap to retry" banner and never
   blocks on audio. Click into the tab, or use the retry banner.
-- **MusicBrainz errors during pre-bake.** It's rate-limited; the action paces
-  itself and caches progress, so simply re-run the command to resume.
+- **MusicBrainz errors during pre-bake.** It's rate-limited. The action paces
+  itself and caches progress, so re-run the command to resume.
 - **Dependency version conflicts.** Use `npx expo install <pkg>` (not
   `npm install`) so versions match the Expo SDK.
 
@@ -414,7 +415,7 @@ v0 is intentionally minimal (see spec §1.2). **Not** in this version: accounts 
 login (all players are guests), public matchmaking or other game modes,
 persistent profiles/leaderboards, user-created playlists, avatar generation, and
 native App Store submission. Reconnection restores a player within a short grace
-window; rounds missed while disconnected score 0.
+window. Rounds missed while disconnected score 0.
 
 ---
 
